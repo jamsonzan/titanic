@@ -333,7 +333,7 @@ train[['Name', 'Sex', 'Ticket', 'Cabin', 'Embarked']].describe()
 
 ```python
 # 基于前面分析进行特征处理
-# preprocess函数是通用的处理，之后还要针对模型进行特定处理
+# tranform函数是通用的处理，之后还要针对模型进行特定处理
 class PreProcessor:
     def fit(self, data):
         # 复用训练集的age_mean，fare_mean
@@ -429,7 +429,7 @@ for c in [0.01, 0.1, 1, 10, 100, 200, 300, 400]:
 ```python
 # 调整决策树深度
 for d in [1, 2, 3, 6, 7, 8, 9]:
-    dtc = DecisionTreeClassifier()
+    dtc = DecisionTreeClassifier(max_depth=d)
     print ('DecisionTree ', np.mean(cross_val_score(dtc, train_x, train_y, cv=10)))
 ```
 
@@ -458,8 +458,7 @@ for n in [120, 300, 500, 800]:
 
 
 ```python
-# 根据交叉验证平均得分以及调参结果，
-# 最终选择训练n_etimators参数为300的rfc模型
+# 根据交叉验证平均得分以及调参结果， 选择训练n_etimators参数为300的rfc模型
 rfc = RandomForestClassifier(n_estimators=300)
 rfc.fit(train_x, train_y)
 # 预测并保存结果
